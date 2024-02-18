@@ -17,4 +17,6 @@ else:
         return sys.stdin.read(1)
 
 
-os.sys.path.append(".")  # Path setting
+os.sys.path.append("./DynamixelSDK")  # Path setting
+
+import dynamixel_sdk as dynamixel  # Uses Dynamixel SDK library
