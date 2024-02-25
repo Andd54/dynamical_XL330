@@ -1,5 +1,5 @@
 import os, sys
-
+import time
 if os.name == "nt":
     import msvcrt
 
@@ -51,28 +51,19 @@ COMM_TX_FAIL                = -1001                         # Communication Tx F
 # Set the port path
 # Get methods and members of PortHandlerLinux or PortHandlerWindows
 protocol:DynamixelDriverProtocol
-
+ids = [1,2,3,4,5,6]
 try:
-    servo_1 = DynamixelDriver([1])
-    servo_2 = DynamixelDriver([2])
-    servo_3 = DynamixelDriver([3])
+    servo = DynamixelDriver(ids)
 except FileNotFoundError:
-    servo_1 = DynamixelDriver([1], port="/dev/ttyUSB0")
-    servo_2 = DynamixelDriver([2], port="/dev/ttyUSB0")
-    servo_3 = DynamixelDriver([3], port="/dev/ttyUSB0")
+    servo = DynamixelDriver(ids, port="/dev/ttyUSB0")
+    
 
-    servo_1.set_torque_mode(True)
-    servo_1.set_torque_mode(False)
-    servo_2.set_torque_mode(True)
-    servo_2.set_torque_mode(False)
-    servo_3.set_torque_mode(True)
-    servo_3.set_torque_mode(False)
 try:
-        while True:
-            joint_angles_1 = servo_1.get_joints()
-            joint_angles_2 = servo_2.get_joints()
-            joint_angles_3 = servo_3.get_joints()
-            # print(f"Joint angles for IDs {ids}: {joint_angles}")
-            # print(f"Joint angles for IDs {ids[1]}: {joint_angles[1]}")
+    while True:
+        joint_angles = servo.get_joints()
+        # print(f"Joint angles for IDs {ids}: {joint_angles}")
+        # print(joint_angles[4])
+        print(joint_angles)
+        time.sleep(0.1)
 except KeyboardInterrupt:
-        servo_2.close()
+        servo.close()
